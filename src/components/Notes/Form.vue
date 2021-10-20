@@ -43,13 +43,18 @@ export default {
   },
   methods: {
     onSubmit () {
+
       let activeTags = []
+
       this.tags.filter(tag => tag.isActive === true) // Находим активные теги
         .forEach((tag) => { activeTags.push({title: tag.title}) }) // Добавляем их в массив activeTags
 
+      this.$emit('onSubmit', { title: this.value, tags: activeTags }) // Отправляем данные в родительский компонент
+
       this.tags.forEach((tag) => { tag.isActive = false }) // Сбрасываем активные классы у тегов в форме
-      this.$emit('onSubmit', { title: this.value, tags: activeTags })
+
       this.value = '' // Очищаем input с заголовком
+
     },
     handleTagClick(tag) {
       tag.isActive = !tag.isActive // Смена активного класса у тега по клику
