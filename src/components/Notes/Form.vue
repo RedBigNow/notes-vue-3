@@ -25,16 +25,32 @@ export default {
   data () {
     return {
       value: '',
-      tags: ["home", "work", "travel"]
+      tags: [
+        {
+          title: 'home',
+          isActive: false
+        },
+        {
+          title: 'work',
+          isActive: false
+        },
+        {
+          title: 'travel',
+          isActive: false
+        }
+      ],
+      activeTags: []
     }
   },
   methods: {
     onSubmit () {
-      this.$emit('onSubmit', this.value)
-      this.value = ''
+      this.activeTags = this.tags.filter(tag => tag.isActive === true); // Создаем новый массив с активными тегами для добавления их в заметку
+      this.$emit('onSubmit', { title: this.value, tags: this.activeTags })
+      this.value = '' // Очищаем input с заголовком
+      this.tags.forEach((tag) => { tag.isActive = false }) // Сбрасываем активные классы у тегов
     },
     handleTagClick(tag) {
-      console.log(tag)
+      tag.isActive = !tag.isActive // Смена активного класса у тега по клику
     }
   }
 }

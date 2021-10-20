@@ -17,14 +17,25 @@ export default {
       notes: [
         {
           title: 'Learn Vue 3',
-          tags: ['work']
+          tags: [
+            {
+              title: 'home',
+            }
+          ]
         },
         {
           title: 'Work Vue 3',
-          tags: ['work', 'home']
+          tags: [
+            {
+              title: 'home',
+            },
+            {
+              title: 'work',
+            }
+          ]
         },
         {
-          title: 'Test test',
+          title: 'Lore Vue 3',
           tags: []
         }
       ]
@@ -48,10 +59,10 @@ export default {
         this.notes = JSON.parse(localNotes);
       }
     },
-    handleSubmit (title) {
+    handleSubmit (item) {
       const note = {
-        title: title,
-        tags: []
+        title: item.title,
+        tags: item.tags
       }
       this.notes.push(note);
     },
