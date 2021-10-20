@@ -30,6 +30,9 @@ export default {
 
 <style lang="scss">
 .notes-list {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
   padding: 40px 0;
 }
 

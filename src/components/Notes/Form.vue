@@ -61,6 +61,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 40px 0 15px;
 }
 
 .note-form {
@@ -70,7 +71,12 @@ export default {
   width: 100%;
 
   textarea {
-    margin-bottom: 0;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    max-width: 220px;
+    margin: 15px auto 0;
   }
 }
 </style>
