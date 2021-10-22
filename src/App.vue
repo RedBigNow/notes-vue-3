@@ -1,5 +1,5 @@
 <template>
-  <div class="wapper">
+  <div class="wrapper">
     <Header />
     <div class="wrapper-content">
       <div class="container">
