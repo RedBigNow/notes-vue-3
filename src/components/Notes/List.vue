@@ -1,9 +1,9 @@
 <template>
   <div class="notes-list">
-    <div class="note-item" v-for="(note, index) in items" :key="index">
+    <div class="note-item" v-for="(note, id) in getNotes" :key="id">
       <div class="note-header">
         <p>{{ note.title }}</p>
-        <span style="cursor: pointer;" @click="$emit('onRemove', index)">&#10005;</span>
+        <span style="cursor: pointer;" @click="deleteNote(note)">&#10005;</span>
       </div>
       <div class="note-footer">
         <TagList isPreview v-if="note.tags && note.tags.length > 0" :items="note.tags" />
@@ -16,13 +16,29 @@
 import TagList from '@/components/UI/TagList'
 
 export default {
-  components: {
-    TagList
+  components: { TagList },
+  mounted () {
+    this.setLocalNotes()
   },
-  props: {
-    items: {
-      type: Array,
-      required: true
+  watch: {
+    getNotes: {
+      handler(notes) {
+        localStorage.setItem("notes", JSON.stringify(notes))
+      },
+      deep: true,
+    }
+  },
+  computed: {
+    getNotes() {
+      return this.$store.getters.getNotes
+    }
+  },
+  methods: {
+    setLocalNotes () {
+      this.$store.dispatch('setLocalNotes')
+    },
+    deleteNote (note) {
+      this.$store.dispatch('deleteNote', note)
     }
   }
 }

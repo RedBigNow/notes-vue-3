@@ -4,7 +4,7 @@
       class="tag-item"
       v-for="item in items"
       :key="item.title"
-      @click="$emit('onItemClick', item )"
+      @click="toggleActiveTag(item)"
       :class=[{isActive:item.isActive},{isPreview:isPreview}]
     >
       <span>{{ item.title }}</span>
@@ -22,6 +22,11 @@ export default {
     isPreview: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    toggleActiveTag(item) {
+      this.$store.dispatch('toggleActiveTag', item)
     }
   }
 }

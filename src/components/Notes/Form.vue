@@ -1,15 +1,8 @@
 <template>
   <div class="note-form__wrapper">
     <form class="note-form" @submit.prevent="onSubmit">
-
-      <textarea
-        v-model="value"
-        required
-        placeholder="Type ur note"
-      />
-
-      <TagList @onItemClick="handleTagClick" :items="tags"/>
-
+      <textarea v-model="noteTitle" placeholder="Type ur note" required />
+      <TagList :items="getTags"/>
       <button class="btn btnPrimary" type="submit">Add new note</button>
     </form>
   </div>
@@ -22,42 +15,22 @@ export default {
   components: {
     TagList
   },
-  data () {
-    return {
-      value: '',
-      tags: [
-        {
-          title: 'home',
-          isActive: false
-        },
-        {
-          title: 'work',
-          isActive: false
-        },
-        {
-          title: 'travel',
-          isActive: false
-        }
-      ]
+  computed: {
+    noteTitle: {
+      get () {
+        return this.$store.state.noteTitle
+      },
+      set (value) {
+        this.$store.commit('setNoteTitle', value)
+      }
+    },
+    getTags() {
+      return this.$store.getters.getTags
     }
   },
   methods: {
     onSubmit () {
-
-      let activeTags = []
-
-      this.tags.filter(tag => tag.isActive === true) // Находим активные теги
-        .forEach((tag) => { activeTags.push({title: tag.title}) }) // Добавляем их в массив activeTags
-
-      this.$emit('onSubmit', { title: this.value, tags: activeTags }) // Отправляем данные в родительский компонент
-
-      this.tags.forEach((tag) => { tag.isActive = false }) // Сбрасываем активные классы у тегов в форме
-
-      this.value = '' // Очищаем input с заголовком
-
-    },
-    handleTagClick(tag) {
-      tag.isActive = !tag.isActive // Смена активного класса у тега по клику
+      this.$store.dispatch('addNote')
     }
   }
 }
